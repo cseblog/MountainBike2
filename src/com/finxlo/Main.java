@@ -7,8 +7,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-	    System.out.println("Test");
-	    test1();
+        test1();
     }
 
     public static void test1() {
@@ -18,5 +17,4 @@ public class Main {
         List<Integer> result = mountainBike.run();
         System.out.println(result);
     }
-
 }

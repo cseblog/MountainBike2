@@ -7,33 +7,29 @@ import java.util.stream.Stream;
 import static com.finxlo.mountain.Node.*;
 
 public class MountainBike {
-    private final int[][] map;
     private Graph g;
     private int[] intArr;
 
     public MountainBike(String file) {
         // FIXME parse file and init map
-        // TODO: call MountainBike(int n, String matrixStr)
-        this.map = new int[0][0];
+        // TODO: call MountainBike(int n, String matri xStr)
     }
 
     /**
      * n is matrix size
      * matrixStr is matrix value in string with space as delimiter
      * 4 8 7 3 2 5 9 3 6 3 2 5 4 4 1 6
-     *
      * @param n
      * @param matrixStr
      */
     public MountainBike(int n, String matrixStr) {
-        this.map = new int[0][0];
         String[] strArr = matrixStr.split(" ");
         intArr = Stream.of(strArr).mapToInt(Integer::parseInt).toArray();
         g = new Graph(intArr.length);
         buildGraph(g, n, intArr);
     }
 
-    private List<Integer> convert(List<Integer> indexes){
+    private List<Integer> convert(List<Integer> indexes) {
         List<Integer> result = new ArrayList<>();
         indexes.forEach(i -> {
             result.add(intArr[i]);
@@ -70,23 +66,25 @@ public class MountainBike {
         }
     }
 
-    public List<Integer> run(){
+    public List<Integer> run() {
         List<Integer> indexList = run(g, intArr);
         return convert(indexList);
     }
 
     private List<Integer> run(Graph g, int[] arr) {
         List<Integer> finalLongestPath = new ArrayList<>();
-        for(int i = 0; i < arr.length; i++) {
+
+        for (int i = 0; i < arr.length; i++) {
             List<Integer> historyList = new ArrayList<>();
             historyList = g.longestPathByDFS(i, historyList);
 
-            if(finalLongestPath != null && historyList.size() > 0 && historyList.size() > finalLongestPath.size() ){
-
+            if (finalLongestPath != null &&
+                    historyList.size() > 0 &&
+                    historyList.size() > finalLongestPath.size()) {
                 finalLongestPath = historyList;
             }
 
-            if(historyList.size() == finalLongestPath.size()){
+            if (historyList.size() == finalLongestPath.size()) {
                 finalLongestPath = g.getSteepestList(historyList, finalLongestPath);
             }
         }
